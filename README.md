@@ -15,4 +15,4 @@ A Python CLI tool for learning vocabulary using the spaced repetition method.
    cd leitner-system
 3. Run:
    ```bash
-   cd leitner-system 
+   python src/Leitner_System_App.py 
