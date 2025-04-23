@@ -1,1 +1,18 @@
-# leitner-system
+# Leitner System  
+
+A Python CLI tool for learning vocabulary using the spaced repetition method.  
+
+## Features  
+- Track learning progress with SQLite.  
+- Add/remove terms and test your knowledge.  
+
+## Installation  
+1. Clone the repo:  
+   ```bash  
+   git clone https://github.com/ahmtardkrbck/leitner-system.git  
+2. Navigate to the project folder:
+   ```bash
+   cd leitner-system
+3. Run:
+   ```bash
+   python src/Leitner_System_App.py 
