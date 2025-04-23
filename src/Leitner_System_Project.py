@@ -17,8 +17,8 @@ class liste():
         self.bağlantı=sqlite3.connect("Liste.db")
         self.cursor=self.bağlantı.cursor()
         sorgu="""create table if not exists Liste (
-        Terim TEXT COLLATE BINARY,
-        Anlamı TEXT,
+        Terim TEXT COLLATE NOCASE,
+        Anlamı TEXT COLLATE NOCASE,
         Sırası INT
         )"""
         self.cursor.execute(sorgu)
@@ -73,13 +73,13 @@ class liste():
             self.bağlantı.commit()
             print(f"{terim.terim} is added to the list")
     def Terim_sil(self,terim):
-        sorgu="select * from Liste where Terim = ? COLLATE BINARY"
+        sorgu="select * from Liste where Terim = ? COLLATE NOCASE"
         self.cursor.execute(sorgu,(terim,))
         liste=self.cursor.fetchall()
         if len(liste)==0:
             print("There is no such term.")
         else:
-            sorgu="delete from Liste where Terim = ? COLLATE BINARY"
+            sorgu="delete from Liste where Terim = ? COLLATE NOCASE"
             self.cursor.execute(sorgu,(terim,))
             self.bağlantı.commit()
             print(f"{terim} is deleted.")
@@ -103,7 +103,7 @@ class liste():
                 self.bağlantı.commit()
                 print(f"{terim} kelimesinin sırası artırıldı.\nYeni Sırası:{sıra}")
     def Sırayı_düşür(self,terim):
-        sorgu="select * from Liste where Terim=?"
+        sorgu="select * from Liste where Terim=? COLLATE NOCASE"
         self.cursor.execute(sorgu,(terim,))
         liste=self.cursor.fetchall()
         if len(liste)==0:
@@ -122,7 +122,7 @@ class liste():
 
 
     def Rastgele(self):
-        sorgu="select Terim,Anlamı from Liste"
+        sorgu="select Terim, Anlamı from Liste"
         self.cursor.execute(sorgu)
         liste=self.cursor.fetchall()
         if len(liste)==0:
@@ -132,7 +132,7 @@ class liste():
             terim,anlamı=rastgele
             print("Your term:"+ terim)
             anlam_kontrolü=input("The meaning of the term:")
-            if anlam_kontrolü==anlamı:
+            if anlam_kontrolü.lower()==anlamı.lower():
                 print("Correct.")
                 liste1.Sırayı_artır(terim,anlamı)
             else:
@@ -156,8 +156,5 @@ class liste():
                 print(f"Correction: {doğru}={liste[0][1]}")
                 print("Decreasing tier..")
                 self.Sırayı_düşür(doğru)
-
-
-
 
 liste1=liste()
